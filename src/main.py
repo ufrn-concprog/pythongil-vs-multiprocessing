@@ -15,7 +15,7 @@ import multiprocessing
 from benchmarks import run_single_threaded, run_threading, run_multiprocessing, run_repeated
 
 UPPER_BOUND = 200_000
-RUNS = 5
+RUNS = 20
 
 
 def main():
@@ -23,7 +23,7 @@ def main():
 
     print(f"Counting primes up to {UPPER_BOUND}, using {num_workers} workers "
           f"where applicable\n")
-  
+
     run_repeated("Single-threaded", lambda: run_single_threaded(UPPER_BOUND), RUNS)
     run_repeated("Threading (GIL)", lambda: run_threading(UPPER_BOUND, num_workers), RUNS)
     run_repeated("Multiprocessing", lambda: run_multiprocessing(UPPER_BOUND, num_workers), RUNS)

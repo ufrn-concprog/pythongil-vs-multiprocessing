@@ -11,7 +11,7 @@ This project is part of the Concurrent Programming module at the [Federal Univer
 
 All three approaches run the same task: counting prime numbers in a range, split into equal chunks across workers where applicable. The task is deliberately CPU-bound (a plain nested loop, no I/O, no sleeping). The GIL specifically serializes execution of Python bytecode, and is released during I/O or sleep, so a task involving either of those would not demonstrate its effect.
 
-Each approach is run 5 times, and the mean and standard deviation of the elapsed time are reported:
+Each approach is run 20 times for statistical significance, and the mean and standard deviation of the elapsed time are reported:
 
 1. **Single-threaded** — the task runs once, with no concurrency, as a baseline.
 2. **Threading** — the task is split across a number of threads equal to the number of logical CPUs available. On the standard (GIL-enabled) Python build, expect little to no speedup over the baseline as the GIL allows only one thread to execute Python bytecode at a time.
