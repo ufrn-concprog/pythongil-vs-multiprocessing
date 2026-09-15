@@ -1,9 +1,9 @@
-# Threading vs. Multiprocessing Under the GIL in Python
+# Threading vs. Multiprocessing under the GIL in Python
 
 [![Python](https://img.shields.io/badge/Python-3.9%2B-blue?logo=python)](https://www.python.org/downloads/)
 ![Build](https://img.shields.io/badge/build-manual-lightgrey)
 
-This benchmark compares single-threaded execution, `threading`, and `multiprocessing` on the same CPU-bound task, to demonstrate empirically how Python's Global Interpreter Lock (GIL) limits threading's benefit for CPU-bound work, and why `multiprocessing` is the standard workaround.
+This benchmark compares single-threaded execution, `threading`, and `multiprocessing` on the same CPU-bound task to demonstrate empirically how Python's Global Interpreter Lock (GIL) limits `threading`'s benefit for CPU-bound work, and why `multiprocessing` is the standard workaround.
 
 This project is part of the Concurrent Programming module at the [Federal University of Rio Grande do Norte (UFRN)](https://www.ufrn.br), Natal, Brazil.
 
@@ -37,7 +37,7 @@ Each approach is run 20 times for statistical significance, and the mean and sta
 
 - [Python 3.9+](https://www.python.org)
 
-Install [pdoc](https://pdoc.dev) only if you want to regenerate the HTML documentation:
+Install [pdoc](https://pdoc.dev) only for regenerating the HTML documentation:
 
 ```bash
 python3 -m pip install pdoc
@@ -54,14 +54,14 @@ python3 src/main.py
 ### Expected output
 
 ```text
-Counting primes up to 200000, using <logical CPU count> workers where applicable
+Counting primes up to 200000, using 11 workers where applicable
 
-Single-threaded    | Mean: 1.842 s | Std Dev: 0.031 s
-Threading (GIL)    | Mean: 1.897 s | Std Dev: 0.045 s
-Multiprocessing    | Mean: 0.312 s | Std Dev: 0.028 s
+Single-threaded     | Mean: 0.173 s | Std Dev: 0.009 s
+Threading (GIL)     | Mean: 0.170 s | Std Dev: 0.002 s
+Multiprocessing     | Mean: 0.118 s | Std Dev: 0.010 s
 ```
 
-`threading` is expected to land close to (or slightly worse than) the single-threaded baseline, despite using multiple threads, as the extra time reflects thread-creation and context-switching overhead with no real parallel benefit on CPU-bound work. `multiprocessing` is expected to show a clear speedup, since each process runs on its own interpreter and its own GIL.
+`threading` is expected to land close to (or slightly worse than) the single-threaded baseline, despite using multiple threads, as the extra time reflects thread-creation and context-switching overhead with no real parallel benefit on CPU-bound work. `multiprocessing` is expected to show a clear speedup since each process runs on its own interpreter and its own GIL.
 
 If the machine has few CPU cores, or `UPPER_BOUND` is set too low, `multiprocessing`'s process-startup overhead can outweigh its benefit, making it look worse than `threading`. This is a real and explainable result (overhead dominating a small workload) rather than a bug. Try increasing `UPPER_BOUND` if the expected speedup is not seen.
 
