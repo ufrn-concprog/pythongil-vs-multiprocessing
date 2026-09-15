@@ -82,7 +82,6 @@ pdoc ./src
 
 Then open the localhost URL printed by `pdoc` in a browser. The generated landing page is also available at [`doc/index.html`](doc/index.html).
 
-
 ## 🤝 Contributing
 
 Contributions are welcome! Fork this repository and submit a pull request 🚀
